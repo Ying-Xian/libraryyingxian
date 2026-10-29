@@ -1,0 +1,1088 @@
+ <!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50 text-slate-900">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primo NDE Workshop Infographic & Live Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .glass-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    }
+    
+    .glass-card-interactive {
+      transition: all 0.2s ease-in-out;
+    }
+    .glass-card-interactive:hover {
+      border-color: #818cf8;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.12);
+    }
+
+    .pulse-subtle {
+      animation: pulseSubtle 2.5s infinite alternate;
+    }
+    @keyframes pulseSubtle {
+      0% { opacity: 0.85; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.02); }
+    }
+
+    .tab-active {
+      border-bottom: 2px solid #4f46e5;
+      color: #4f46e5;
+      background: #eef2ff;
+      font-weight: 600;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%) translateX(-50%); opacity: 0; }
+      to { transform: translateY(0) translateX(-50%); opacity: 1; }
+    }
+    .toast-anim {
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans overflow-hidden bg-slate-50 text-slate-800">
+
+  <!-- Top Navigation & Header -->
+  <header class="h-16 border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 md:px-6 flex items-center justify-between shrink-0 z-20 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="p-2 bg-indigo-50 rounded-xl border border-indigo-100 text-indigo-600">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-base md:text-lg text-slate-900 leading-tight flex items-center gap-2">
+          Primo NDE Workshop Framework
+          <span class="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 hidden sm:inline-block">5-Step Workshop Flow</span>
+        </h1>
+        <p class="text-xs text-slate-500 hidden sm:block">Interactive Facilitator Guide & Live Response Infographic</p>
+      </div>
+    </div>
+
+    <!-- Quick Action Controls -->
+    <div class="flex items-center gap-2 md:gap-3">
+      <button onclick="toggleInfographicView()" id="btn-toggle-view" class="flex items-center gap-1.5 text-xs font-medium px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl transition">
+        <i data-lucide="layout" class="w-4 h-4 text-indigo-600"></i>
+        <span class="hidden md:inline">Infographic Overview</span>
+      </button>
+
+      <button onclick="openSlidoSetupModal()" class="flex items-center gap-1.5 text-xs font-medium px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl transition">
+        <i data-lucide="copy" class="w-4 h-4"></i>
+        <span>Setup Kit</span>
+      </button>
+
+      <button onclick="exportWorkshopReport()" class="flex items-center gap-1.5 text-xs font-medium px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Export Results</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Step Navigation Bar -->
+  <nav class="bg-white border-b border-slate-200 flex overflow-x-auto shrink-0 px-4 shadow-sm">
+    <button onclick="switchQuestion(1)" id="tab-q1" class="tab-active px-4 py-2.5 text-xs md:text-sm font-medium flex items-center gap-2 shrink-0 transition">
+      <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] flex items-center justify-center font-bold">1</span>
+      👍 What Works Well?
+    </button>
+    <button onclick="switchQuestion(2)" id="tab-q2" class="px-4 py-2.5 text-xs md:text-sm font-medium text-slate-600 hover:text-slate-900 flex items-center gap-2 shrink-0 transition">
+      <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 text-[11px] flex items-center justify-center font-bold">2</span>
+      🤔 What Doesn't Work?
+    </button>
+    <button onclick="switchQuestion(3)" id="tab-q3" class="px-4 py-2.5 text-xs md:text-sm font-medium text-slate-600 hover:text-slate-900 flex items-center gap-2 shrink-0 transition">
+      <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 text-[11px] flex items-center justify-center font-bold">3</span>
+      💡 What Could We Improve?
+    </button>
+    <button onclick="switchQuestion(4)" id="tab-q4" class="px-4 py-2.5 text-xs md:text-sm font-medium text-slate-600 hover:text-slate-900 flex items-center gap-2 shrink-0 transition">
+      <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 text-[11px] flex items-center justify-center font-bold">4</span>
+      🤝 Cross-Team Handoffs
+    </button>
+    <button onclick="switchQuestion(5)" id="tab-q5" class="px-4 py-2.5 text-xs md:text-sm font-medium text-slate-600 hover:text-slate-900 flex items-center gap-2 shrink-0 transition">
+      <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 text-[11px] flex items-center justify-center font-bold">5</span>
+      ⭐ Prioritise Opportunities
+    </button>
+  </nav>
+
+  <!-- Main Canvas Area -->
+  <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50 relative">
+
+    <!-- ================= INFOGRAPHIC OVERVIEW SECTION ================= -->
+    <section id="infographic-roadmap-panel" class="max-w-6xl mx-auto space-y-6 mb-8">
+      <div class="glass-card rounded-2xl p-6 border border-slate-200 relative overflow-hidden bg-white">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-indigo-600 font-semibold text-xs tracking-wider uppercase mb-1">
+              <i data-lucide="compass" class="w-4 h-4"></i> Workshop Facilitation Architecture
+            </div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900">Primo NDE Discovery Workshop Blueprint</h2>
+            <p class="text-xs md:text-sm text-slate-600 mt-1">A 5-question sequence engineered to build psychological safety, surface friction anonymously, and end with concrete cross-team action.</p>
+          </div>
+          <div class="flex items-center gap-2 bg-slate-100 border border-slate-200 px-3 py-2 rounded-xl text-xs text-slate-700 shrink-0">
+            <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
+            <span>Est. Duration: <strong>25–35 Minutes</strong></span>
+          </div>
+        </div>
+
+        <!-- 5-Stage Visual Infographic Flow Diagram -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3 relative">
+          <!-- Step 1 Card -->
+          <div onclick="switchQuestion(1)" class="glass-card p-4 rounded-xl border-t-4 border-t-emerald-500 cursor-pointer hover:bg-slate-50 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-emerald-700">STEP 1</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono">Word Cloud</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1">👍 What Works Well?</h3>
+              <p class="text-[11px] text-slate-600">Warm-up exercise to generate positive energy and identify key wins to protect.</p>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
+              Goal: Positive baseline
+            </div>
+          </div>
+
+          <!-- Step 2 Card -->
+          <div onclick="switchQuestion(2)" class="glass-card p-4 rounded-xl border-t-4 border-t-rose-500 cursor-pointer hover:bg-slate-50 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-rose-700">STEP 2</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-mono">Open / Anon</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1">🤔 What Doesn't Work?</h3>
+              <p class="text-[11px] text-slate-600">Anonymous open text to capture confusing, frustrating, or labor-intensive issues.</p>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
+              Goal: Uncover friction safely
+            </div>
+          </div>
+
+          <!-- Step 3 Card -->
+          <div onclick="switchQuestion(3)" class="glass-card p-4 rounded-xl border-t-4 border-t-amber-500 cursor-pointer hover:bg-slate-50 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-700">STEP 3</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-mono">Open Text</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1">💡 What Could We Improve?</h3>
+              <p class="text-[11px] text-slate-600">Brainstorm enhancements across search, access, AI, guidance, and collections.</p>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
+              Goal: Wide feature ideation
+            </div>
+          </div>
+
+          <!-- Step 4 Card -->
+          <div onclick="switchQuestion(4)" class="glass-card p-4 rounded-xl border-t-4 border-t-indigo-500 cursor-pointer hover:bg-slate-50 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-700">STEP 4</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-mono">Pivot Question</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1">🤝 Cross-Team Handoffs</h3>
+              <p class="text-[11px] text-slate-600">Crucial pivot question linking Discovery with Reading Lists, Doc Delivery, Metadata & AI.</p>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
+              Goal: Inter-team alignment
+            </div>
+          </div>
+
+          <!-- Step 5 Card -->
+          <div onclick="switchQuestion(5)" class="glass-card p-4 rounded-xl border-t-4 border-t-blue-500 cursor-pointer hover:bg-slate-50 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-blue-700">STEP 5</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-mono">Ranking / Poll</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1">⭐ Prioritise Opportunities</h3>
+              <p class="text-[11px] text-slate-600">Participants choose their top 2 initiatives to produce a concrete action list.</p>
+            </div>
+            <div class="mt-4 pt-2 border-t border-slate-100 text-[10px] text-slate-500">
+              Goal: Clear priority outcome
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUESTION 1: WHAT WORKS WELL? ================= -->
+    <section id="panel-q1" class="max-w-6xl mx-auto space-y-6">
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-emerald-700 font-bold text-xs tracking-wider uppercase mb-1">
+              <span>Question 1</span> • <span class="text-slate-500 font-normal">Type: Open Text / Word Cloud</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+              👍 What do you think is working well with Primo NDE?
+            </h2>
+            <div class="mt-2 text-xs text-slate-700 bg-emerald-50/80 border border-emerald-200 rounded-xl p-3 inline-block">
+              <strong class="text-emerald-800">Facilitator Prompt:</strong> <em>"What helps our users? What helps your team? What should we keep?"</em>
+            </div>
+          </div>
+
+          <!-- Simulation Submission Form -->
+          <form onsubmit="submitQ1Word(event)" class="flex flex-col gap-2 shrink-0">
+            <div class="flex items-center gap-2">
+              <input type="text" id="input-q1-word" placeholder="e.g. Fast Permalinks, Intuitive Search" required class="bg-white border border-slate-300 focus:border-emerald-600 text-slate-900 text-sm rounded-xl px-4 py-2 w-64 focus:outline-none shadow-sm">
+              <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-emerald-600/10">
+                <i data-lucide="plus" class="w-4 h-4"></i> Add Response
+              </button>
+            </div>
+            <span class="text-[10px] text-slate-500 text-right">Simulates live audience entries</span>
+          </form>
+        </div>
+
+        <!-- Interactive Word Cloud Canvas -->
+        <div class="relative bg-white rounded-xl p-4 border border-slate-200 h-80 flex items-center justify-center overflow-hidden shadow-inner">
+          <canvas id="q1-wordcloud-canvas" class="w-full h-full cursor-pointer"></canvas>
+          <div class="absolute bottom-3 right-3 text-[10px] text-slate-600 bg-slate-100/90 px-2.5 py-1 rounded-md border border-slate-200 shadow-sm">
+            Interactive Word Cloud • Click tags to boost weight
+          </div>
+        </div>
+
+        <!-- Tag Frequency Breakdown -->
+        <div class="mt-4 pt-4 border-t border-slate-200">
+          <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-2">Live Submitted Strengths:</span>
+          <div id="q1-tags-list" class="flex flex-wrap gap-2">
+            <!-- Dynamic badges injected -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUESTION 2: WHAT DOESN'T WORK AS WELL? ================= -->
+    <section id="panel-q2" class="max-w-6xl mx-auto space-y-6 hidden">
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-rose-700 font-bold text-xs tracking-wider uppercase mb-1">
+              <span>Question 2</span> • <span class="text-slate-500 font-normal">Type: Open Text (Anonymous)</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+              🤔 What doesn't work as well as it could?
+            </h2>
+            <div class="mt-2 text-xs text-slate-700 bg-rose-50/80 border border-rose-200 rounded-xl p-3">
+              <strong class="text-rose-800">Facilitator Prompt:</strong> <em>"Think about things that are confusing, frustrating, difficult to find, or create extra work for users or staff."</em>
+              <div class="mt-1 text-[11px] text-rose-700 flex items-center gap-1">
+                <i data-lucide="eye-off" class="w-3.5 h-3.5"></i> Set poll settings to <strong>Anonymous</strong> to maximize honest feedback.
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openQ2AddModal()" class="bg-rose-600 hover:bg-rose-700 text-white font-medium text-sm px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-rose-600/10 self-start md:self-auto shrink-0">
+            <i data-lucide="alert-circle" class="w-4 h-4"></i> Submit Anonymous Pain Point
+          </button>
+        </div>
+
+        <!-- Anonymous Feedback Cards Grid -->
+        <div id="q2-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamic cards injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUESTION 3: WHAT COULD WE IMPROVE? ================= -->
+    <section id="panel-q3" class="max-w-6xl mx-auto space-y-6 hidden">
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-amber-700 font-bold text-xs tracking-wider uppercase mb-1">
+              <span>Question 3</span> • <span class="text-slate-500 font-normal">Type: Open Text with Category Prompts</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+              💡 What could we improve?
+            </h2>
+            <div class="mt-2 text-xs text-slate-700 bg-amber-50/80 border border-amber-200 rounded-xl p-3">
+              <strong class="text-amber-800">Facilitator Prompt:</strong> <em>"What would make discovery, access or support easier for our users?"</em>
+            </div>
+          </div>
+
+          <button onclick="openQ3AddModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-medium text-sm px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-amber-600/10 self-start md:self-auto shrink-0">
+            <i data-lucide="lightbulb" class="w-4 h-4"></i> Submit Improvement Idea
+          </button>
+        </div>
+
+        <!-- Topic Category Inspiration Badges -->
+        <div class="mb-6 p-4 bg-slate-100/80 rounded-xl border border-slate-200">
+          <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-2">Display these topic badges on your presentation slide to inspire ideas:</span>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1 rounded-lg bg-blue-100 text-blue-800 border border-blue-200 font-medium">🔍 Search</span>
+            <span class="px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-200 font-medium">🔑 Access</span>
+            <span class="px-3 py-1 rounded-lg bg-pink-100 text-pink-800 border border-pink-200 font-medium">📚 Reading Lists</span>
+            <span class="px-3 py-1 rounded-lg bg-amber-100 text-amber-800 border border-amber-200 font-medium">🚚 Resource Sharing</span>
+            <span class="px-3 py-1 rounded-lg bg-purple-100 text-purple-800 border border-purple-200 font-medium">📂 Collections</span>
+            <span class="px-3 py-1 rounded-lg bg-cyan-100 text-cyan-800 border border-cyan-200 font-medium">🤖 AI Discovery</span>
+            <span class="px-3 py-1 rounded-lg bg-indigo-100 text-indigo-800 border border-indigo-200 font-medium">📖 Guidance</span>
+            <span class="px-3 py-1 rounded-lg bg-rose-100 text-rose-800 border border-rose-200 font-medium">💬 Communication</span>
+          </div>
+        </div>
+
+        <!-- Improvement Ideas Wall -->
+        <div id="q3-ideas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamic items injected -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUESTION 4: THE CROSS-TEAM QUESTION ================= -->
+    <section id="panel-q4" class="max-w-6xl mx-auto space-y-6 hidden">
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-indigo-700 font-bold text-xs tracking-wider uppercase mb-1">
+              <span>Question 4</span> • <span class="text-indigo-800 font-bold">⭐ The Essential Pivot Question</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+              🤝 Where could we work better across teams?
+            </h2>
+            <div class="mt-2 text-xs text-slate-700 bg-indigo-50/80 border border-indigo-200 rounded-xl p-3">
+              <strong class="text-indigo-800">Facilitator Prompt:</strong> <em>"What could Primo NDE help us connect, coordinate or improve together?"</em>
+              <p class="text-[11px] text-indigo-700 mt-1">This pivots the session from <em>"what is wrong with Primo?"</em> to <em>"what can we build together?"</em></p>
+            </div>
+          </div>
+
+          <button onclick="openQ4AddModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-indigo-600/10 self-start md:self-auto shrink-0">
+            <i data-lucide="network" class="w-4 h-4"></i> Propose Cross-Team Synergy
+          </button>
+        </div>
+
+        <!-- Cross-Team Synergy Examples Matrix Card -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-3 mb-6">
+          <div class="bg-white p-3.5 rounded-xl border border-pink-200 shadow-sm hover:border-pink-400 transition">
+            <span class="text-[10px] uppercase font-bold text-pink-700 block mb-1">Synergy Pair 1</span>
+            <h4 class="font-bold text-xs text-slate-900">Reading Lists + Discovery</h4>
+            <p class="text-[11px] text-slate-600 mt-1">Direct reserve links in Primo result lists & real-time reading pack availability.</p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-amber-200 shadow-sm hover:border-amber-400 transition">
+            <span class="text-[10px] uppercase font-bold text-amber-700 block mb-1">Synergy Pair 2</span>
+            <h4 class="font-bold text-xs text-slate-900">Resource Sharing + Discovery</h4>
+            <p class="text-[11px] text-slate-600 mt-1">1-click RapidILL fallback options when items are not locally owned.</p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-emerald-200 shadow-sm hover:border-emerald-400 transition">
+            <span class="text-[10px] uppercase font-bold text-emerald-700 block mb-1">Synergy Pair 3</span>
+            <h4 class="font-bold text-xs text-slate-900">Academic Services + Discovery</h4>
+            <p class="text-[11px] text-slate-600 mt-1">Subject guide integration & embedded librarian help widgets in Primo UI.</p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition">
+            <span class="text-[10px] uppercase font-bold text-blue-700 block mb-1">Synergy Pair 4</span>
+            <h4 class="font-bold text-xs text-slate-900">Metadata + Collections + Discovery</h4>
+            <p class="text-[11px] text-slate-600 mt-1">Enhanced indexing rules for specialized local archives & digital collections.</p>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-xl border border-purple-200 shadow-sm hover:border-purple-400 transition">
+            <span class="text-[10px] uppercase font-bold text-purple-700 block mb-1">Synergy Pair 5</span>
+            <h4 class="font-bold text-xs text-slate-900">Research Support + AI Discovery</h4>
+            <p class="text-[11px] text-slate-600 mt-1">Responsible AI citation summaries & research repository indexing in Primo.</p>
+          </div>
+        </div>
+
+        <!-- Cross-Team Ideas Grid -->
+        <div id="q4-synergy-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamic cards injected -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUESTION 5: PRIORITISE ================= -->
+    <section id="panel-q5" class="max-w-6xl mx-auto space-y-6 hidden">
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2 text-blue-700 font-bold text-xs tracking-wider uppercase mb-1">
+              <span>Question 5</span> • <span class="text-slate-500 font-normal">Type: Multiple Choice / Ranking Poll</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+              ⭐ Which opportunity would make the biggest difference to our users?
+            </h2>
+            <div class="mt-2 text-xs text-slate-700 bg-blue-50/80 border border-blue-200 rounded-xl p-3">
+              <strong class="text-blue-800">Facilitator Announcement:</strong> <em>"Review our ideas above and vote! <strong>Choose your top 2 options.</strong> This provides us with our concrete priority agenda."</em>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 bg-slate-100 border border-slate-200 p-3 rounded-xl text-xs text-slate-700 shrink-0">
+            <i data-lucide="check-square" class="w-4 h-4 text-emerald-600"></i>
+            <span>Max Choices: <strong>2 per person</strong></span>
+          </div>
+        </div>
+
+        <!-- Voting / Ranking Results Live Bar Chart -->
+        <div class="space-y-4 bg-white rounded-xl p-5 border border-slate-200 shadow-sm" id="q5-poll-container">
+          <!-- Live Poll Options injected via JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal: Facilitator Setup Reference -->
+  <div id="modal-slido-setup" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white border border-slate-200 rounded-2xl p-6 w-full max-w-2xl shadow-2xl flex flex-col max-h-[85vh]">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5 text-indigo-600"></i>
+          Event Configuration Cheat Sheet
+        </h3>
+        <button onclick="closeModal('modal-slido-setup')" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto space-y-4 pr-1 text-xs text-slate-700">
+        <!-- Q1 Config -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+          <div class="flex items-center justify-between font-bold text-emerald-800">
+            <span>Q1. 👍 What do you think is working well with Primo NDE?</span>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Word Cloud / Open Text</span>
+          </div>
+          <p class="text-slate-600 italic">Prompt: "What helps our users? What helps your team? What should we keep?"</p>
+        </div>
+
+        <!-- Q2 Config -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+          <div class="flex items-center justify-between font-bold text-rose-800">
+            <span>Q2. 🤔 What doesn't work as well as it could?</span>
+            <span class="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded">Open Text (Enable Anonymous)</span>
+          </div>
+          <p class="text-slate-600 italic">Prompt: "Think about things that are confusing, frustrating, difficult to find, or create extra work for users or staff."</p>
+        </div>
+
+        <!-- Q3 Config -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+          <div class="flex items-center justify-between font-bold text-amber-800">
+            <span>Q3. 💡 What could we improve?</span>
+            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded">Open Text</span>
+          </div>
+          <p class="text-slate-600 italic">Prompt: "What would make discovery, access or support easier for our users? (Search, access, Reading Lists, resource sharing, collections, AI, guidance, communication)"</p>
+        </div>
+
+        <!-- Q4 Config -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+          <div class="flex items-center justify-between font-bold text-indigo-800">
+            <span>Q4. 🤝 Where could we work better across teams?</span>
+            <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded">Open Text</span>
+          </div>
+          <p class="text-slate-600 italic">Prompt: "What could Primo NDE help us connect, coordinate or improve together? (e.g. Reading Lists + Discovery, Resource Sharing + Discovery, Metadata + Collections)"</p>
+        </div>
+
+        <!-- Q5 Config -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+          <div class="flex items-center justify-between font-bold text-blue-800">
+            <span>Q5. ⭐ Which opportunity would make the biggest difference to our users?</span>
+            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Multiple Choice (Select Max 2)</span>
+          </div>
+          <p class="text-slate-600 italic">Instruction: "Show submitted ideas from Q3/Q4 as options. Tell everyone: Choose your top 2."</p>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-200 flex justify-end gap-2">
+        <button onclick="copySlidoConfigText()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-medium flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="copy" class="w-4 h-4"></i> Copy All Prompts as Text
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Submission Modal for Questions 2, 3, 4 -->
+  <div id="modal-generic-input" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white border border-slate-200 rounded-2xl p-6 w-full max-w-lg shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="modal-input-title" class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          Submit Response
+        </h3>
+        <button onclick="closeModal('modal-generic-input')" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleGenericModalSubmit(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="modal-target-question">
+        
+        <div id="modal-category-selector-container" class="hidden">
+          <label class="block font-semibold text-slate-700 mb-1">Category</label>
+          <select id="modal-input-category" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-slate-800">
+            <option value="Search">🔍 Search & Discovery</option>
+            <option value="Access">🔑 Access & Authentication</option>
+            <option value="Reading Lists">📚 Reading Lists</option>
+            <option value="Resource Sharing">🚚 Resource Sharing (Doc Delivery)</option>
+            <option value="Collections">📂 Metadata & Collections</option>
+            <option value="AI">🤖 AI Discovery</option>
+            <option value="Guidance">📖 Guidance & Academic Support</option>
+            <option value="Communication">💬 Communication & Workflows</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1" id="modal-input-label">Your Response</label>
+          <textarea id="modal-input-text" rows="4" required placeholder="Type response here..." class="w-full bg-white border border-slate-300 rounded-xl p-3 text-slate-900 focus:outline-none focus:border-indigo-600 shadow-sm"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-generic-input')" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100">Cancel</button>
+          <button type="submit" id="modal-submit-btn" class="px-4 py-2 rounded-xl font-medium bg-indigo-600 hover:bg-indigo-700 text-white shadow-md">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 border border-slate-800 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 z-50 hidden toast-anim text-xs">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-msg">Notification text</span>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    /* Workshop Application State */
+    const state = {
+      currentQuestion: 1,
+      showInfographic: true,
+
+      // Q1 Word Cloud Data
+      q1Words: [
+        { text: 'Fast Permalinks', weight: 9 },
+        { text: 'Leganto Integration', weight: 8 },
+        { text: 'Clean Search UI', weight: 7 },
+        { text: 'RapidILL Links', weight: 6 },
+        { text: 'EZproxy SSO', weight: 8 },
+        { text: 'Faceted Filters', weight: 5 },
+        { text: 'Export Citations', weight: 6 },
+        { text: 'Reliable Uptime', weight: 7 }
+      ],
+
+      // Q2 Anonymous Friction Data
+      q2Responses: [
+        { id: 'q2_1', text: 'Off-campus login loops occur when accessing electronic course reserves via proxy.', category: 'Access' },
+        { id: 'q2_2', text: 'Confusing error messages when a requested book scan is blocked by copyright limits.', category: 'Resource Sharing' },
+        { id: 'q2_3', text: 'Primo search relevance often ranks old editions higher than required course texts.', category: 'Search' },
+        { id: 'q2_4', text: 'Faculty cannot easily tell if a reading list item is available in full-text vs physical print.', category: 'Reading Lists' }
+      ],
+
+      // Q3 Improvement Ideas Data
+      q3Responses: [
+        { id: 'q3_1', text: 'Add AI-generated article summary previews in search drawer.', category: 'AI', upvotes: 12 },
+        { id: 'q3_2', text: 'Implement direct "Request Scan" button next to unavailable physical holdings.', category: 'Resource Sharing', upvotes: 10 },
+        { id: 'q3_3', text: 'Show real-time course reading list status directly on Primo item records.', category: 'Reading Lists', upvotes: 14 },
+        { id: 'q3_4', text: 'Create 1-click SSO diagnostics widget for patrons stuck behind EZproxy.', category: 'Access', upvotes: 9 }
+      ],
+
+      // Q4 Cross-Team Synergy Proposals Data
+      q4Responses: [
+        { id: 'q4_1', pair: 'Reading Lists + Discovery', title: 'Automated Reading List Availability Badges', desc: 'Sync Leganto course reserve status directly into Primo indexing feeds so students see required reading tags immediately.', upvotes: 16 },
+        { id: 'q4_2', pair: 'Resource Sharing + Discovery', title: 'Smart Unfilled Request Fallback', desc: 'When Primo shows "No Local Holdings", automatically display RapidILL scan request options in 1 click.', upvotes: 15 },
+        { id: 'q4_3', pair: 'Metadata + Collections + Discovery', title: 'Special Collections Facet Overhaul', desc: 'Joint metadata sprint to standardize archive tags and build dedicated visual collection galleries in Primo NDE.', upvotes: 11 },
+        { id: 'q4_4', pair: 'Research Support + AI Discovery', title: 'Embedded AI Citation Assistant Pilot', desc: 'Collaborate on responsible AI summary widgets for graduate researchers in Primo.', upvotes: 13 }
+      ],
+
+      // Q5 Voting Choices
+      q5Poll: [
+        { id: 'opt_1', text: 'Reading Lists + Discovery: Real-time Leganto course reserve badges in Primo', votes: 18 },
+        { id: 'opt_2', text: 'Resource Sharing + Discovery: Smart 1-click RapidILL fallback links', votes: 15 },
+        { id: 'opt_3', text: 'Access & Auth: OpenAuthens / SSO diagnostic widget for patrons', votes: 11 },
+        { id: 'opt_4', text: 'Research + AI: Embedded AI article summary previews in Primo NDE', votes: 14 },
+        { id: 'opt_5', text: 'Metadata + Collections: Enhanced local archives indexing rules', votes: 8 }
+      ],
+      userVotedOptions: []
+    };
+
+    window.onload = function() {
+      lucide.createIcons();
+      renderQ1WordCloud();
+      renderQ1Tags();
+      renderQ2Cards();
+      renderQ3Ideas();
+      renderQ4Synergy();
+      renderQ5Poll();
+    };
+
+    /* Switch Question Stage */
+    function switchQuestion(qNum) {
+      state.currentQuestion = qNum;
+      
+      for (let i = 1; i <= 5; i++) {
+        const panel = document.getElementById(`panel-q${i}`);
+        const tab = document.getElementById(`tab-q${i}`);
+        if (panel && tab) {
+          if (i === qNum) {
+            panel.classList.remove('hidden');
+            tab.classList.add('tab-active');
+            tab.classList.remove('text-slate-600');
+          } else {
+            panel.classList.add('hidden');
+            tab.classList.remove('tab-active');
+            tab.classList.add('text-slate-600');
+          }
+        }
+      }
+
+      if (qNum === 1) renderQ1WordCloud();
+      if (qNum === 5) renderQ5Poll();
+      lucide.createIcons();
+    }
+
+    function toggleInfographicView() {
+      const roadmap = document.getElementById('infographic-roadmap-panel');
+      const btn = document.getElementById('btn-toggle-view');
+      state.showInfographic = !state.showInfographic;
+
+      if (state.showInfographic) {
+        roadmap.classList.remove('hidden');
+        btn.classList.add('bg-slate-100');
+      } else {
+        roadmap.classList.add('hidden');
+        btn.classList.remove('bg-slate-100');
+      }
+    }
+
+    /* Q1 Canvas Word Cloud - Adjusted for Light Background */
+    function renderQ1WordCloud() {
+      const canvas = document.getElementById('q1-wordcloud-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * 2;
+      canvas.height = rect.height * 2;
+      ctx.scale(2, 2);
+
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      // High-contrast vibrant colors for white canvas
+      const colors = ['#059669', '#2563eb', '#4f46e5', '#d97706', '#db2777', '#0891b2'];
+      const width = rect.width;
+      const height = rect.height;
+
+      state.q1Words.forEach((item, idx) => {
+        const fontSize = Math.min(14 + item.weight * 3.5, 36);
+        ctx.font = `bold ${fontSize}px Inter, sans-serif`;
+        ctx.fillStyle = colors[idx % colors.length];
+
+        const angle = idx * 0.75;
+        const radius = 22 * idx;
+        const x = (width / 2) + Math.cos(angle) * radius - (ctx.measureText(item.text).width / 2);
+        const y = (height / 2) + Math.sin(angle) * (radius * 0.5) + (fontSize / 3);
+
+        ctx.fillText(item.text, Math.max(15, Math.min(width - 160, x)), Math.max(30, Math.min(height - 20, y)));
+      });
+    }
+
+    function renderQ1Tags() {
+      const container = document.getElementById('q1-tags-list');
+      container.innerHTML = '';
+      state.q1Words.forEach(w => {
+        const tag = document.createElement('button');
+        tag.className = 'px-3 py-1 rounded-lg bg-white border border-slate-200 text-emerald-800 text-xs font-medium flex items-center gap-1.5 hover:bg-slate-100 shadow-sm transition';
+        tag.innerHTML = `<span>${escapeHtml(w.text)}</span> <span class="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">${w.weight}</span>`;
+        tag.onclick = () => {
+          w.weight++;
+          renderQ1WordCloud();
+          renderQ1Tags();
+        };
+        container.appendChild(tag);
+      });
+    }
+
+    function submitQ1Word(e) {
+      e.preventDefault();
+      const input = document.getElementById('input-q1-word');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const existing = state.q1Words.find(w => w.text.toLowerCase() === val.toLowerCase());
+      if (existing) {
+        existing.weight += 2;
+      } else {
+        state.q1Words.push({ text: val, weight: 5 });
+      }
+
+      input.value = '';
+      renderQ1WordCloud();
+      renderQ1Tags();
+      showToast(`Added "${val}" to Q1 Strengths Cloud!`);
+    }
+
+    /* Q2 Anonymous Friction Board */
+    function renderQ2Cards() {
+      const grid = document.getElementById('q2-cards-container');
+      grid.innerHTML = '';
+
+      state.q2Responses.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'glass-card p-4 rounded-xl border border-rose-200 relative flex flex-col justify-between bg-white';
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200 font-semibold flex items-center gap-1">
+                <i data-lucide="eye-off" class="w-3 h-3"></i> Anonymous Submission
+              </span>
+              <span class="text-slate-500 font-mono">${item.category || 'General'}</span>
+            </div>
+            <p class="text-xs text-slate-800 leading-relaxed font-medium">${escapeHtml(item.text)}</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex justify-end">
+            <button onclick="pivotFrictionToImprovement('${escapeHtml(item.text)}')" class="text-[11px] text-amber-700 hover:text-amber-800 flex items-center gap-1 font-semibold">
+              <span>Propose Fix in Q3</span> &rarr;
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function openQ2AddModal() {
+      openGenericModal('q2', '🤔 Log Anonymous Pain Point / Friction', 'Describe what is frustrating, labor-intensive, or confusing in Primo NDE:', false);
+    }
+
+    /* Q3 Improvements Ideation */
+    function renderQ3Ideas() {
+      const grid = document.getElementById('q3-ideas-grid');
+      grid.innerHTML = '';
+
+      state.q3Responses.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'glass-card p-4 rounded-xl border border-slate-200 flex flex-col justify-between glass-card-interactive bg-white';
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-semibold">
+                ${escapeHtml(item.category)}
+              </span>
+            </div>
+            <p class="text-xs text-slate-800 leading-relaxed font-medium">${escapeHtml(item.text)}</p>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <button onclick="upvoteQ3Idea('${item.id}')" class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-semibold transition">
+              <i data-lucide="thumbs-up" class="w-3 h-3"></i> ${item.upvotes}
+            </button>
+            <button onclick="addIdeaToPoll('${escapeHtml(item.text)}')" class="text-[11px] text-blue-700 hover:text-blue-800 flex items-center gap-1 font-semibold">
+              <span>Add to Q5 Poll</span> &rarr;
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function upvoteQ3Idea(id) {
+      const idea = state.q3Responses.find(i => i.id === id);
+      if (idea) {
+        idea.upvotes++;
+        renderQ3Ideas();
+      }
+    }
+
+    function openQ3AddModal() {
+      openGenericModal('q3', '💡 Propose Primo NDE Improvement Idea', 'What would make discovery, access, or support easier?', true);
+    }
+
+    function pivotFrictionToImprovement(text) {
+      switchQuestion(3);
+      openQ3AddModal();
+      document.getElementById('modal-input-text').value = `Fix for: "${text}"`;
+    }
+
+    /* Q4 Cross-Team Synergy */
+    function renderQ4Synergy() {
+      const grid = document.getElementById('q4-synergy-grid');
+      grid.innerHTML = '';
+
+      state.q4Responses.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'glass-card p-4 rounded-xl border border-indigo-200 flex flex-col justify-between glass-card-interactive bg-white';
+        card.innerHTML = `
+          <div class="space-y-2">
+            <span class="text-[10px] px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 border border-indigo-200 font-bold block w-fit">
+              🤝 ${escapeHtml(item.pair)}
+            </span>
+            <h4 class="font-bold text-sm text-slate-900">${escapeHtml(item.title)}</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(item.desc)}</p>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <button onclick="upvoteQ4Synergy('${item.id}')" class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-semibold transition">
+              <i data-lucide="thumbs-up" class="w-3 h-3"></i> ${item.upvotes}
+            </button>
+            <button onclick="addIdeaToPoll('${escapeHtml(item.pair)}: ${escapeHtml(item.title)}')" class="text-[11px] text-blue-700 hover:text-blue-800 font-semibold">
+              Include in Q5 Poll &rarr;
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function upvoteQ4Synergy(id) {
+      const syn = state.q4Responses.find(s => s.id === id);
+      if (syn) {
+        syn.upvotes++;
+        renderQ4Synergy();
+      }
+    }
+
+    function openQ4AddModal() {
+      openGenericModal('q4', '🤝 Propose Cross-Team Collaboration Initiative', 'Title & short description of how teams can coordinate in Primo:', false);
+    }
+
+    /* Q5 Poll & Prioritization */
+    function renderQ5Poll() {
+      const container = document.getElementById('q5-poll-container');
+      container.innerHTML = '';
+
+      const maxVotes = Math.max(...state.q5Poll.map(o => o.votes), 1);
+
+      state.q5Poll.forEach((opt, idx) => {
+        const isVoted = state.userVotedOptions.includes(opt.id);
+        const percent = Math.round((opt.votes / maxVotes) * 100);
+
+        const row = document.createElement('div');
+        row.className = 'space-y-1.5';
+        row.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-700 text-[10px] flex items-center justify-center font-bold">${idx + 1}</span>
+              ${escapeHtml(opt.text)}
+            </span>
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-xs font-bold text-blue-700">${opt.votes} Votes</span>
+              <button onclick="voteQ5Option('${opt.id}')" class="px-3 py-1 rounded-lg text-xs font-semibold transition ${isVoted ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300'}">
+                ${isVoted ? '✓ Selected' : 'Vote'}
+              </button>
+            </div>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+            <div class="bg-gradient-to-r from-indigo-500 to-blue-600 h-full rounded-full transition-all duration-500" style="width: ${percent}%"></div>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function voteQ5Option(optId) {
+      if (state.userVotedOptions.includes(optId)) {
+        state.userVotedOptions = state.userVotedOptions.filter(id => id !== optId);
+        const opt = state.q5Poll.find(o => o.id === optId);
+        if (opt) opt.votes--;
+      } else {
+        if (state.userVotedOptions.length >= 2) {
+          showToast('You can choose a maximum of 2 top priorities.');
+          return;
+        }
+        state.userVotedOptions.push(optId);
+        const opt = state.q5Poll.find(o => o.id === optId);
+        if (opt) opt.votes++;
+      }
+      renderQ5Poll();
+    }
+
+    function addIdeaToPoll(text) {
+      const exists = state.q5Poll.some(o => o.text.toLowerCase() === text.toLowerCase());
+      if (!exists) {
+        state.q5Poll.push({
+          id: 'opt_' + Date.now(),
+          text: text,
+          votes: 1
+        });
+        showToast('Idea added to Q5 Prioritization Poll!');
+      } else {
+        showToast('This option is already in the Q5 Poll list.');
+      }
+      switchQuestion(5);
+    }
+
+    /* Modal Handlers */
+    function openGenericModal(qType, title, label, showCat) {
+      document.getElementById('modal-target-question').value = qType;
+      document.getElementById('modal-input-title').innerText = title;
+      document.getElementById('modal-input-label').innerText = label;
+      document.getElementById('modal-input-text').value = '';
+
+      const catContainer = document.getElementById('modal-category-selector-container');
+      if (showCat) catContainer.classList.remove('hidden');
+      else catContainer.classList.add('hidden');
+
+      const modal = document.getElementById('modal-generic-input');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function handleGenericModalSubmit(e) {
+      e.preventDefault();
+      const qType = document.getElementById('modal-target-question').value;
+      const text = document.getElementById('modal-input-text').value.trim();
+      const cat = document.getElementById('modal-input-category').value;
+
+      if (!text) return;
+
+      if (qType === 'q2') {
+        state.q2Responses.unshift({ id: 'q2_' + Date.now(), text, category: 'Anonymous' });
+        renderQ2Cards();
+        showToast('Anonymous pain point logged.');
+      } else if (qType === 'q3') {
+        state.q3Responses.unshift({ id: 'q3_' + Date.now(), text, category: cat, upvotes: 1 });
+        renderQ3Ideas();
+        showToast('Improvement idea added to board.');
+      } else if (qType === 'q4') {
+        state.q4Responses.unshift({ id: 'q4_' + Date.now(), pair: 'Cross-Team Synergy', title: text, desc: 'Submitted during cross-team session', upvotes: 1 });
+        renderQ4Synergy();
+        showToast('Cross-team proposal recorded.');
+      }
+
+      closeModal('modal-generic-input');
+    }
+
+    function openSlidoSetupModal() {
+      const modal = document.getElementById('modal-slido-setup');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    /* Export Functions */
+    function exportWorkshopReport() {
+      let md = `# Primo NDE Workshop Final Outcomes\n`;
+      md += `**Generated:** ${new Date().toLocaleDateString()}\n\n`;
+
+      md += `## 1. 👍 Working Well (Word Cloud Top Items)\n`;
+      state.q1Words.forEach(w => md += `- ${w.text} (${w.weight} mentions)\n`);
+
+      md += `\n## 2. 🤔 Uncovered Pain Points (Q2 Anonymous)\n`;
+      state.q2Responses.forEach(r => md += `- ${r.text}\n`);
+
+      md += `\n## 3. 💡 Key Improvement Ideas (Q3)\n`;
+      state.q3Responses.forEach(i => md += `- [${i.category}] ${i.text} (${i.upvotes} upvotes)\n`);
+
+      md += `\n## 4. 🤝 Cross-Team Synergies (Q4)\n`;
+      state.q4Responses.forEach(s => md += `- **${s.pair}:** ${s.title} — ${s.desc}\n`);
+
+      md += `\n## 5. ⭐ Final Priority Opportunities (Q5 Poll)\n`;
+      state.q5Poll.sort((a,b) => b.votes - a.votes).forEach((p, idx) => md += `${idx + 1}. ${p.text} — **${p.votes} Votes**\n`);
+
+      copyToClipboard(md);
+      showToast('Full workshop summary exported to clipboard in Markdown!');
+    }
+
+    function copySlidoConfigText() {
+      const text = `Workshop Questions Setup:
+
+1. 👍 What do you think is working well with Primo NDE?
+Prompt: What helps our users? What helps your team? What should we keep?
+Type: Word Cloud / Open Text
+
+2. 🤔 What doesn't work as well as it could?
+Prompt: Think about things that are confusing, frustrating, difficult to find, or create extra work for users or staff.
+Type: Open Text (Set to Anonymous)
+
+3. 💡 What could we improve?
+Prompt: What would make discovery, access or support easier for our users? (Search • access • Reading Lists • resource sharing • collections • AI • guidance • communication)
+Type: Open Text
+
+4. 🤝 Where could we work better across teams?
+Prompt: What could Primo NDE help us connect, coordinate or improve together? (Reading Lists + Discovery, Resource Sharing + Discovery, Metadata + Collections, etc.)
+Type: Open Text
+
+5. ⭐ Which opportunity would make the biggest difference to our users?
+Instruction: Choose your top 2.
+Type: Multiple Choice Poll`;
+
+      copyToClipboard(text);
+      showToast('Configuration setup copied!');
+    }
+
+    function copySlidoConfigText() {
+      const text = `Slido Workshop Questions Setup:
+
+1. 👍 What do you think is working well with Primo NDE?
+Prompt: What helps our users? What helps your team? What should we keep?
+Type: Word Cloud / Open Text
+
+2. 🤔 What doesn't work as well as it could?
+Prompt: Think about things that are confusing, frustrating, difficult to find, or create extra work for users or staff.
+Type: Open Text (Set to Anonymous)
+
+3. 💡 What could we improve?
+Prompt: What would make discovery, access or support easier for our users? (Search • access • Reading Lists • resource sharing • collections • AI • guidance • communication)
+Type: Open Text
+
+4. 🤝 Where could we work better across teams?
+Prompt: What could Primo NDE help us connect, coordinate or improve together? (Reading Lists + Discovery, Resource Sharing + Discovery, Metadata + Collections, etc.)
+Type: Open Text
+
+5. ⭐ Which opportunity would make the biggest difference to our users?
+Instruction: Choose your top 2.
+Type: Multiple Choice Poll`;
+
+      copyToClipboard(text);
+      showToast('Slido configuration setup copied!');
+    }
+
+    /* Helper Utilities */
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          console.error('Fallback copy failed', err);
+        }
+        document.body.removeChild(textArea);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

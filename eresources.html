@@ -1,0 +1,540 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eResources Troubleshooting Workflow</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            .print-break-inside-avoid { break-inside: avoid; }
+            body { background: white !important; color: black !important; }
+            .shadow-xl, .shadow-md, .shadow-lg { box-shadow: none !important; }
+            .border { border-color: #e5e7eb !important; }
+        }
+        .step-card {
+            transition: all 0.25s ease-in-out;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Header Navigation & Action Bar -->
+    <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-brand-600 rounded-lg text-white">
+                    <i class="fa-solid fa-network-wired text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">eResources Troubleshooting Guide</h1>
+                    <p class="text-xs text-slate-400">Tier 2 Staff Workflow & Escalation Matrix</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <!-- Search input -->
+                <div class="relative hidden sm:block">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchInput" onkeyup="filterContent()" placeholder="Search terms (e.g. Alma, OpenAthens)..." 
+                        class="bg-slate-800 text-slate-200 text-xs rounded-full pl-8 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500 w-48 lg:w-64 transition-all">
+                </div>
+
+                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Print / PDF</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Banner Overview -->
+        <section class="bg-gradient-to-r from-brand-900 via-brand-800 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+            <div class="absolute right-0 top-0 bottom-0 opacity-10 pointer-events-none flex items-center justify-center pr-12">
+                <i class="fa-solid fa-diagram-project text-[240px]"></i>
+            </div>
+            <div class="relative z-10 max-w-3xl">
+                <span class="bg-brand-500/30 text-brand-200 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full border border-brand-400/30">Standard Operating Procedure</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-3 mb-2">Internal eResources Escalation Standard</h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Follow this 5-step workflow to streamline troubleshooting, prevent redundant reproduction attempts, and ensure clear handoffs between Tier 1 frontline staff and specialist teams.
+                </p>
+            </div>
+
+            <!-- Quick Jump Flow Bar -->
+            <div class="mt-6 pt-6 border-t border-slate-700/60 grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+                <a href="#step1" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition border border-white/10 flex flex-col items-center justify-center group">
+                    <span class="font-bold text-brand-300 group-hover:text-white">Step 1</span>
+                    <span class="text-slate-300 truncate w-full">Tier 1 Escalate </span>
+                <a href="#step2" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition border border-white/10 flex flex-col items-center justify-center group">
+                    <span class="font-bold text-brand-300 group-hover:text-white">Step 2</span>
+                    <span class="text-slate-300 truncate w-full">Access Pathway</span>
+                </a>
+                <a href="#step3" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition border border-white/10 flex flex-col items-center justify-center group">
+                    <span class="font-bold text-brand-300 group-hover:text-white">Step 3</span>
+                    <span class="text-slate-300 truncate w-full">Assign Owner</span>
+                </a>
+                <a href="#step4" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition border border-white/10 flex flex-col items-center justify-center group">
+                    <span class="font-bold text-brand-300 group-hover:text-white">Step 4</span>
+                    <span class="text-slate-300 truncate w-full">Collaborate</span>
+                </a>
+                <a href="#step5" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition border border-white/10 flex flex-col items-center justify-center group col-span-2 sm:col-span-1">
+                    <span class="font-bold text-brand-300 group-hover:text-white">Step 5</span>
+                    <span class="text-slate-300 truncate w-full">Resolve & Close</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- STEP 1 -->
+        <section id="step1" class="step-card bg-white rounded-xl border border-slate-200 shadow-sm p-6 print-break-inside-avoid">
+            <div class="flex items-start justify-between mb-4 border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-3">
+                    <span class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-extrabold flex items-center justify-center text-lg shadow-inner">1</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Tier 1 Completes Initial Troubleshooting</h3>
+                        <p class="text-xs text-slate-500">Frontline staff standard intake & information collection</p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded bg-amber-50 text-amber-700 border border-amber-200/60 hidden sm:inline-block">
+                    <i class="fa-solid fa-hand-paper mr-1"></i> Tier 1 Scope Limit
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Data Checklist -->
+                <div class="lg:col-span-2 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-700 uppercase tracking-wide flex items-center">
+                        <i class="fa-solid fa-list-check text-brand-600 mr-2"></i> Minimum Required Information Checklist
+                    </h4>
+                    <p class="text-xs text-slate-500">Ensure all items below are gathered prior to escalation. Interactive checkboxes assist intake validation:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs" id="checklistContainer">
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Problem Description:</strong> User's description of what happened.</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Resource Details:</strong> Title, plus ISSN, DOI, or Database name.</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Exact URL:</strong> Direct link where failure occurred.</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Error Evidence:</strong> Screenshot/text (redact sensitive info).</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Timestamp:</strong> Date and approx time of attempt.</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Location Context:</strong> On-campus vs. Off-campus.</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Auth Status:</strong> Signed in? Authentication attempted?</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Scope of Outage:</strong> 1 resource vs. multiple; 1 user vs. many.</div>
+                        </label>
+
+                        <label class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition md:col-span-2">
+                            <input type="checkbox" class="mt-0.5 rounded text-brand-600 focus:ring-brand-500">
+                            <div><strong class="text-slate-800">Attempted Fixes:</strong> Clear cache, incognito test, alternative browser outcomes.</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Scope Rules & Exit Criteria -->
+                <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Scope Boundary</h4>
+                        <div class="p-3 bg-amber-50 rounded border border-amber-200 text-xs text-amber-900 leading-relaxed">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>
+                            <strong>Note:</strong> Tier 1 staff are <em>not expected</em> to diagnose Alma, Primo, or OpenAthens backend configuration rules.
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Exit Criterion</h4>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Case is either <strong>Resolved</strong> or contains <strong>sufficient information</strong> for Tier 2 staff to begin immediate investigation without guessing.
+                        </p>
+                    </div>
+
+                    <div class="p-2.5 bg-blue-50 text-blue-800 rounded text-[11px] leading-tight border border-blue-100">
+                        <i class="fa-solid fa-circle-info text-blue-600 mr-1"></i>
+                        The E-resources Team may request any missing information before escalating the issue to the next team.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section id="step2" class="step-card bg-white rounded-xl border border-slate-200 shadow-sm p-6 print-break-inside-avoid">
+            <div class="flex items-center space-x-3 mb-4 border-b border-slate-100 pb-4">
+                <span class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 font-extrabold flex items-center justify-center text-lg shadow-inner">2</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Identify Access Pathway & Failure Point</h3>
+                    <p class="text-xs text-slate-500">Pinpoint where the breakdown occurs before routing the case</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-600 mb-6">
+                Determine the exact point at which access breaks down, rather than immediately assigning the ticket based on vague user descriptions.
+            </p>
+
+            <!-- Access Pathway Interactive Diagram -->
+            <div class="bg-slate-900 text-white rounded-xl p-6 shadow-inner relative overflow-x-auto">
+                <div class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 flex items-center justify-between">
+                    <span>Simplified eResources Access Pathway</span>
+                    <span class="text-[10px] text-brand-400 normal-case">Click nodes to view failure indicators</span>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between gap-3 min-w-[650px]">
+                    <!-- Node 1 -->
+                    <div onclick="showNodeDetails('primo')" class="cursor-pointer flex-1 w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-brand-500 p-3 rounded-lg text-center transition group">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="text-xs font-bold text-slate-200">1. Library Search</div>
+                        <div class="text-[10px] text-slate-400">Primo Discovery</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right text-slate-600 hidden md:block"></i>
+                    <i class="fa-solid fa-chevron-down text-slate-600 md:hidden"></i>
+
+                    <!-- Node 2 -->
+                    <div onclick="showNodeDetails('alma')" class="cursor-pointer flex-1 w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-brand-500 p-3 rounded-lg text-center transition group">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="text-xs font-bold text-slate-200">2. Alma </div>
+                        <div class="text-[10px] text-slate-400">Electronic Holdings/User account</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right text-slate-600 hidden md:block"></i>
+                    <i class="fa-solid fa-chevron-down text-slate-600 md:hidden"></i>
+
+                    <!-- Node 3 -->
+                    <div onclick="showNodeDetails('resolver')" class="cursor-pointer flex-1 w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-brand-500 p-3 rounded-lg text-center transition group">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-link"></i>
+                        </div>
+                        <div class="text-xs font-bold text-slate-200">3. Link Resolver</div>
+                        <div class="text-[10px] text-slate-400">OpenURL / Syntax</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right text-slate-600 hidden md:block"></i>
+                    <i class="fa-solid fa-chevron-down text-slate-600 md:hidden"></i>
+
+                    <!-- Node 4 -->
+                    <div onclick="showNodeDetails('openathens')" class="cursor-pointer flex-1 w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-brand-500 p-3 rounded-lg text-center transition group">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div class="text-xs font-bold text-slate-200">4. OpenAthens</div>
+                        <div class="text-[10px] text-slate-400">Auth / Proxy</div>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right text-slate-600 hidden md:block"></i>
+                    <i class="fa-solid fa-chevron-down text-slate-600 md:hidden"></i>
+
+                    <!-- Node 5 -->
+                    <div onclick="showNodeDetails('publisher')" class="cursor-pointer flex-1 w-full bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-brand-500 p-3 rounded-lg text-center transition group">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <div class="text-xs font-bold text-slate-200">5. Publisher Site</div>
+                        <div class="text-[10px] text-slate-400">Paywall / Platform</div>
+                    </div>
+                </div>
+
+                <!-- Pathway Info Box -->
+                <div id="pathwayInfo" class="mt-4 p-3 bg-slate-800/80 rounded border border-slate-700 text-xs text-slate-300 transition-all">
+                    <span class="font-bold text-brand-400"><i class="fa-solid fa-lightbulb mr-1"></i> Alternate Routes:</span> Users may also enter directly via bookmark, direct database link, or search engines. Always trace backward from where the breakdown occurs.
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section id="step3" class="step-card bg-white rounded-xl border border-slate-200 shadow-sm p-6 print-break-inside-avoid">
+            <div class="flex items-center space-x-3 mb-4 border-b border-slate-100 pb-4">
+                <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-extrabold flex items-center justify-center text-lg shadow-inner">3</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Assign Initial Investigation Owner</h3>
+                    <p class="text-xs text-slate-500">Route using symptoms & evidence to target the correct specialist unit</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-600 border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 uppercase tracking-wider font-semibold border-b border-slate-200">
+                            <th class="p-3 rounded-tl-lg">Symptom / Evidence Observed</th>
+                            <th class="p-3">Likely Root Cause</th>
+                            <th class="p-3 rounded-tr-lg">Assigned Owner / Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-medium text-slate-800">
+                                <i class="fa-solid fa-book-open text-amber-500 mr-1.5"></i>
+                                Journal in Primo, but page states "No Subscription"
+                            </td>
+                            <td class="p-3">Coverage date mismatch or unactivated portfolio</td>
+                            <td class="p-3 font-semibold text-brand-700">
+                                Investigate Coverage & Subscription Entitlement
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-medium text-slate-800">
+                                <i class="fa-solid fa-arrow-turn-down text-rose-500 mr-1.5"></i>
+                                Database link redirects to wrong destination / 404
+                            </td>
+                            <td class="p-3">Malformed URL parser syntax or broken Alma portfolio link</td>
+                            <td class="p-3 font-semibold text-brand-700">
+                                Acquisition & Alma Team
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-medium text-slate-800">
+                                <i class="fa-solid fa-user-lock text-purple-500 mr-1.5"></i>
+                                Off-campus users fail to authenticate via OpenAthens
+                            </td>
+                            <td class="p-3">Attribute release failure, domain restriction, or proxy loop</td>
+                            <td class="p-3 font-semibold text-brand-700">
+                                Authentication & Systems Team
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-medium text-slate-800">
+                                <i class="fa-solid fa-file-invoice-dollar text-emerald-500 mr-1.5"></i>
+                                Publisher confirms subscription expired / payment issue
+                            </td>
+                            <td class="p-3">Lapsed license agreement, renewal delay, or unpaid invoice</td>
+                            <td class="p-3 font-semibold text-brand-700">
+                                Licensing & Acquisition Team
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 font-medium text-slate-800">
+                                <i class="fa-solid fa-triangle-exclamation text-red-500 mr-1.5"></i>
+                                Multiple unrelated platforms/publishers failing simultaneously
+                            </td>
+                            <td class="p-3">Shared infrastructure failure (LibKey/OpenAthens, SSO, DNS)</td>
+                            <td class="p-3 font-semibold text-brand-700">
+                                Systems / Network Infrastructure (Treat as Incident)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section id="step4" class="step-card bg-white rounded-xl border border-slate-200 shadow-sm p-6 print-break-inside-avoid">
+            <div class="flex items-center space-x-3 mb-4 border-b border-slate-100 pb-4">
+                <span class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 font-extrabold flex items-center justify-center text-lg shadow-inner">4</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Investigate & Collaborate Where Necessary</h3>
+                    <p class="text-xs text-slate-500">Cross-team coordination rules & accountability</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Single Point of Contact Principle -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50/50 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-800 flex items-center">
+                        <i class="fa-solid fa-user-check text-brand-600 mr-2"></i> Single Lead Ownership Rule
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        The initial assigned owner retains ticket leadership throughout multi-department inquiries. Do <strong>not</strong> bounce tickets endlessly between teams without clear actions or named owners.
+                    </p>
+                    <div class="bg-rose-50 border border-rose-200 rounded p-2.5 text-xs text-rose-800 font-medium">
+                        <i class="fa-solid fa-ban text-rose-600 mr-1"></i> Avoid "Ticket Ping-Pong": Never reassign a case back without specific test results or explicit required actions.
+                    </div>
+                </div>
+
+                <!-- Collaborative Scenario Example -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50/50 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-800 flex items-center">
+                        <i class="fa-solid fa-people-arrows text-brand-600 mr-2"></i> Example Cross-Team Escalation
+                    </h4>
+                    <div class="text-xs text-slate-600 space-y-2">
+                        <div class="flex items-start space-x-2">
+                            <span class="bg-brand-100 text-brand-800 font-bold px-1.5 py-0.5 rounded text-[10px]">Scenario</span>
+                            <span>Publisher claims "No Active Subscription," but library records show paid invoice.</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="bg-slate-200 text-slate-700 font-bold px-1.5 py-0.5 rounded text-[10px]">Action</span>
+                            <span><strong>Licensing Team</strong> verifies entitlement with vendor while <strong>Collection/Tech Team</strong> double-checks Alma e-resource link parameters & IP ranges.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 5 -->
+        <section id="step5" class="step-card bg-white rounded-xl border border-slate-200 shadow-sm p-6 print-break-inside-avoid">
+            <div class="flex items-center space-x-3 mb-4 border-b border-slate-100 pb-4">
+                <span class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-extrabold flex items-center justify-center text-lg shadow-inner">5</span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Resolve, Validate, and Close</h3>
+                    <p class="text-xs text-slate-500">Closure criteria for internal resolution or vendor escalation</p>
+                </div>
+            </div>
+
+            <!-- Resolution 5-Point Plan -->
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-6">
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-center space-y-1">
+                    <div class="text-brand-600 font-bold text-sm">1. Confirm</div>
+                    <div class="text-[11px] text-slate-600">Identify exact root cause</div>
+                </div>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-center space-y-1">
+                    <div class="text-brand-600 font-bold text-sm">2. Fix</div>
+                    <div class="text-[11px] text-slate-600">Apply fix or confirm vendor patch</div>
+                </div>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-center space-y-1">
+                    <div class="text-brand-600 font-bold text-sm">3. Test</div>
+                    <div class="text-[11px] text-slate-600">Validate via user pathway</div>
+                </div>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-center space-y-1">
+                    <div class="text-brand-600 font-bold text-sm">4. Notify</div>
+                    <div class="text-[11px] text-slate-600">Inform Tier 1 / patron</div>
+                </div>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-center space-y-1">
+                    <div class="text-brand-600 font-bold text-sm">5. Record</div>
+                    <div class="text-[11px] text-slate-600">Log fix details in KB</div>
+                </div>
+            </div>
+
+            <!-- External Unresolved Case Protocol -->
+            <div class="bg-indigo-900 text-indigo-100 rounded-lg p-4 text-xs space-y-2">
+                <div class="font-bold text-sm text-white flex items-center">
+                    <i class="fa-solid fa-headset mr-2 text-indigo-300"></i> Vendor Escalation Tracking Rules (Unresolved Cases)
+                </div>
+                <p class="leading-relaxed">
+                    If an issue cannot be resolved internally and requires extended vendor/publisher resolution, the internal ticket must be documented with the following four mandatory parameters before placing on hold:
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-center text-[11px] font-semibold">
+                    <div class="bg-indigo-800/80 p-2 rounded border border-indigo-700">Vendor Case #</div>
+                    <div class="bg-indigo-800/80 p-2 rounded border border-indigo-700">Outstanding Action</div>
+                    <div class="bg-indigo-800/80 p-2 rounded border border-indigo-700">Responsible Lead</div>
+                    <div class="bg-indigo-800/80 p-2 rounded border border-indigo-700">Next Review Date</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-12 no-print">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>eResources Technical Support Workflow Standard • Internal Library Reference</p>
+            <p class="text-slate-500">Optimized for Tier 1 Support, Electronic Resource Management (ERM), and Alma/Primo Teams.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        // Interactive Node Click Details for Step 2
+        const nodeDetails = {
+            primo: {
+                title: "1. Library Search / Primo Breakdown",
+                desc: "Check search and record display, metadata accuracy, GetIt/ViewIt links, record matching, deduplication and FRBR grouping, and identify any missing, merged, duplicated or incorrectly linked records."
+            },
+            alma: {
+                title: "2. Alma Electronic Resource Config Breakdown",
+                desc: " Check portfolio activation status, coverage statements, public notes, parser parameters in Alma CZ/IZ, and user account status, roles and permissions where relevant."
+            },
+            resolver: {
+                title: "3. Link Resolver Breakdown",
+                desc: "Verify OpenURL syntax, base URL configuration, or redirection loops happening between Alma and the target gateway."
+            },
+            openathens: {
+                title: "4. OpenAthens / Auth Breakdown",
+                desc: "Investigate redirect loops, IP enforcement errors, missing scope attributes, or SAML authorization failures for off-campus patrons."
+            },
+            publisher: {
+                title: "5. Publisher / Vendor Platform Breakdown",
+                desc: "Verify publisher server outages, platform maintenance, IP access lists, expired licenses, or denial of access paywalls."
+            }
+        };
+
+        function showNodeDetails(key) {
+            const infoBox = document.getElementById('pathwayInfo');
+            const data = nodeDetails[key];
+            if (data) {
+                infoBox.innerHTML = `<span class="font-bold text-brand-300"><i class="fa-solid fa-circle-info mr-1"></i> ${data.title}:</span> <span class="text-white">${data.desc}</span>`;
+            }
+        }
+
+        // Live Search Filter
+        function filterContent() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.step-card');
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(input)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
